@@ -1,9 +1,19 @@
 const router = require('express').Router();
 const knex = require('./data/dbConfig');
 
-//CRUD
+//CRUD OPPERATIONS
 
 //POST
+router.post('/', validateAccount, (req, res) => {
+    const account = req.body;
+    knex('accounts')
+    .insert(account)
+    .then(response => {
+        res.status(201).json(`Post created with id ${response}.`);
+    })
+    .catch(err => res.status(500).json({ error: err }));
+});
+
 
 
 //Middleware 
