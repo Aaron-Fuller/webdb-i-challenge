@@ -34,6 +34,19 @@ router.get('/:id', validateAccountId, (req, res) => {
     .catch(err => res.status(500).json({ error: err }));
 })
 
+//UPDATE
+router.put('/:id', validateAccountId, validateAccount, (req, res) => {
+    const id = req.params.id;
+    const update = req.body;
+    knex('accounts')
+    .where({ id: id })
+    .update(update)
+    .then(count => {
+        res.status(200).json(`${count} record updated.`);
+    })
+    .catch(err => res.status(500).json({ error: err }));
+})
+
 
 //Middleware 
 function validateAccountId(req, res, next) {
