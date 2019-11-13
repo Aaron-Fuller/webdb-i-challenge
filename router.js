@@ -47,6 +47,17 @@ router.put('/:id', validateAccountId, validateAccount, (req, res) => {
     .catch(err => res.status(500).json({ error: err }));
 })
 
+//DELETE
+router.delete('/:id', validateAccountId, (req, res) => {
+    const id = req.params.id;
+    knex('accounts')
+    .where({ id: id })
+    .del()
+    .then(count => {
+        res.status(200).json(`${count} record deleted.`);
+    })
+    .catch(err => res.status(500).json({ error: err }));
+})
 
 //Middleware 
 function validateAccountId(req, res, next) {
