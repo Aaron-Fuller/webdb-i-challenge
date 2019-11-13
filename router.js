@@ -14,6 +14,25 @@ router.post('/', validateAccount, (req, res) => {
     .catch(err => res.status(500).json({ error: err }));
 });
 
+//GET
+router.get('/', (req, res) => {
+    knex('accounts') // same thing as db.select('*').from('accounts')
+    // as per usual, promise stuff
+    .then(accounts => {
+        res.status(200).json(accounts);
+    })
+    .catch(err => res.status(500).json({ error: err })); 
+})
+
+router.get('/:id', validateAccountId, (req, res) => {
+    const id = req.params.id;
+    knex('accounts')
+    .where({ id: id })
+    .then(account => {
+        res.status(200).json(account);
+    })
+    .catch(err => res.status(500).json({ error: err }));
+})
 
 
 //Middleware 
